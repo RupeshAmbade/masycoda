@@ -1,0 +1,127 @@
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                               
+                                <title>Machine Test</title>
+                            </head>
+                            <body>
+                                <div >
+                                    <br><br>
+                                    <div class="board">
+                                        <h3>Sample Input/Output</h3>
+
+                                        <table>
+                                            <tr>
+                                                <td><input id="one" type="text"  ></td>
+                                                <td><input id="two" type="text"  ></td>
+                                                <td><input id="three" type="text"  ></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="four" type="text"  ></td>
+                                                <td><input id="five" type="text"  ></td>
+                                                <td><input id="six" type="text"  ></td>
+                                            </tr>
+                                            <tr>
+                                                <td><input id="seven" type="text"  ></td>
+                                                <td><input id="eight" type="text"  ></td>
+                                                <td><input id="nine" type="text"  ></td>
+                                            </tr>
+                                        </table><br>
+
+                                         <div id="mincost"></div>
+                                        <button class="btn btn-success" onclick="gen()"> Generate</button><br><br>
+                                    </div>        
+                                </div> 
+                                <script >
+                                function gen(){
+                                    let one = parseInt(document.getElementById('one').value)
+                                    let two = parseInt(document.getElementById('two').value)
+                                    let three = parseInt(document.getElementById('three').value)
+                                    let four = parseInt(document.getElementById('four').value)
+                                    let five = parseInt(document.getElementById('five').value)
+                                    let six = parseInt(document.getElementById('six').value)
+                                    let seven = parseInt(document.getElementById('seven').value)
+                                    let eight = parseInt(document.getElementById('eight').value)
+                                    let nine = parseInt(document.getElementById('nine').value)
+
+                                     var mat = [
+                                          [one,two,three],[four,five,six],[seven,eight,nine]
+                                        ];
+
+                                        formingMagicSquare(mat);
+
+
+                                let n=3;
+                                var vals = new Array();
+                                for(var i=0;i<3;i++)
+                                {
+                                    vals.splice(i,0,new Array());
+                                    for(var j=0;j<3;j++)
+                                    vals[i].splice(i,0,0);
+                                }
+                                i=Math.floor(Math.random() * 10)%3;
+                                j=(i+1)%3;
+                                let cnt=1;
+                                while(cnt<=9)
+                                {       
+                                    if(i==-1 && j==n)
+                                    {
+                                        j=n-2;
+                                        i=0;
+                                    }else
+                                    {
+                                        if(i<0)
+                                        i=n-1;
+                                        if(j==n)
+                                        j=0;
+                                    }
+                                    if(vals[i][j]!=0)
+                                    {
+                                        i++;
+                                        j-=2;
+                                        continue;
+                                    }
+                                    // console.log(i,j);
+                                    // console.log(j);
+                                    vals[i][j]=cnt++;
+                                    // console.log(vals[i][j]);
+                                    
+                                    j++;
+                                    i--;
+                                }
+                                document.getElementById('one').value=vals[0][0];
+                                document.getElementById('two').value=vals[0][1];
+                                document.getElementById('three').value=vals[0][2];
+                                document.getElementById('four').value=vals[1][0];
+                                document.getElementById('five').value=vals[1][1];
+                                document.getElementById('six').value=vals[1][2];
+                                document.getElementById('seven').value=vals[2][0];
+                                document.getElementById('eight').value=vals[2][1];
+                                document.getElementById('nine').value=vals[2][2];
+                             
+
+                            }
+
+                            function formingMagicSquare(s) {
+                                  const squares = ['618753294', '816357492', '834159672', '438951276', '672159834', '276951438', '294753618', '492357816'];
+                                  let min = 100;
+                                  let cost = (s, squares) => {
+
+                                      return [...s.map(value => value.join('')).join('')].reduce((target, item, index) => {
+                                          target += Math.abs(+item - +squares[index])
+                                          return target;
+                                      }, 0)
+                                  };
+
+                                  squares.forEach((item, index) => {
+                                      let value = cost(s, squares[index]);
+                                      (value < min) && (min = value);
+                                  });
+                                    mincost.innerHTML = `<h2>Min Cost :${min}</h2>`;
+                                  
+                              }
+
+
+                            </script>
+                            </body>
+                            </html>
